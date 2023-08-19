@@ -279,6 +279,9 @@ public class BucketCache implements BlockCache, HeapSize {
     this.algorithm = conf.get(FILE_VERIFY_ALGORITHM, DEFAULT_FILE_VERIFY_ALGORITHM);
     this.ioEngine = getIOEngineFromName(ioEngineName, capacity, persistencePath);
     this.writerThreads = new WriterThread[writerThreadNum];
+    if (blockSize == 0) {
+      throw new IllegalArgumentException("blockSize cannot be zero");
+    }
     long blockNumCapacity = capacity / blockSize;
     if (blockNumCapacity >= Integer.MAX_VALUE) {
       // Enough for about 32TB of cache!
