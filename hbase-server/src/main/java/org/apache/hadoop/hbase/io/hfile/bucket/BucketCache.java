@@ -280,8 +280,8 @@ public class BucketCache implements BlockCache, HeapSize {
     this.ioEngine = getIOEngineFromName(ioEngineName, capacity, persistencePath);
     this.writerThreads = new WriterThread[writerThreadNum];
     
-    if (blockSize == 0) {
-      throw new IllegalArgumentException("blockSize cannot be zero");
+    if (blockSize <= 0) {
+      throw new IllegalArgumentException("blockSize cannot be zero or negative");
     }
     long blockNumCapacity = capacity / blockSize;
     if (blockNumCapacity >= Integer.MAX_VALUE) {
