@@ -463,6 +463,8 @@ public abstract class AbstractFSWAL<W extends WriterBase> implements WAL {
 
   private int calculateMaxLogFiles(Configuration conf, long logRollSize) {
     Pair<Long, MemoryType> globalMemstoreSize = MemorySizeUtil.getGlobalMemStoreSize(conf);
+    if (logRollSize <= 0) {
+      throw new IllegalArgumentException("logRollSize cannot be zero or negative");
     return (int) ((globalMemstoreSize.getFirst() * 2) / logRollSize);
   }
 
