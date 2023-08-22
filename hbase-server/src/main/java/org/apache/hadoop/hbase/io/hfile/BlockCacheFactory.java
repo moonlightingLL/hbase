@@ -198,6 +198,10 @@ public final class BlockCacheFactory {
     }
 
     int blockSize = c.getInt(BLOCKCACHE_BLOCKSIZE_KEY, HConstants.DEFAULT_BLOCKSIZE);
+    if (blockSize <= 0) {
+      throw new IllegalStateException("blockSize <= 0; Check " + BLOCKCACHE_BLOCKSIZE_KEY
+        + " setting and/or server java heap size");
+    }
     final long bucketCacheSize = MemorySizeUtil.getBucketCacheSize(c);
     if (bucketCacheSize <= 0) {
       throw new IllegalStateException("bucketCacheSize <= 0; Check " + BUCKET_CACHE_SIZE_KEY
